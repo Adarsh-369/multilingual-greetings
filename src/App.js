@@ -1,5 +1,8 @@
-import {useState} from 'react'
-import TabItem from './components/TabItem'
+import {Component} from 'react'
+
+import Tabs from './components/Tabs'
+import LanguageItem from './components/LanguageItem'
+
 import './App.css'
 
 const languageGreetingsList = [
@@ -27,34 +30,47 @@ const languageGreetingsList = [
 ]
 
 // Replace your code here
-const App = () => {
-  const [idElement, setIdElement] = useState(languageGreetingsList[0].id)
-
-  const changeState = id => {
-    setIdElement(id)
+class App extends Component {
+  state = {
+    activeTabId: languageGreetingsList[0].id,
   }
-  const getGreeting = () => {
-    const result = languageGreetingsList.find(i => i.id === idElement)
-    return result
-  }
-  const {imageUrl, imageAltText} = getGreeting()
 
-  render (
-    <div className="container">
-      <h1 className="heading">Multilingual Greetings</h1>
-      <ul className="tabs-list">
-        {languageGreetingsList.map(each => (
-          <TabItem
-            details={each}
-            key={each.id}
-            isActive={idElement === each.id}
-            changeState={changeState}
-          />
+  clickTabItem = tabValue => {
+    this.setState({activeTabId: tabValue})
+  }
+
+  getFilteredProjects = () => {
+    const {activeTabId} = this.state
+    const filteredProjects = languageGreetingsList.filter(
+      eachDetails => eachDetails.id === activeTabId,
+    )
+    return filteredProjects
+  }
+
+  render() {
+    const {activeTabId} = this.state
+    const filteredProjects = this.getFilteredProjects()
+
+    return (
+      <div className="main-container">
+        <h1 className="heading">Multilingual Greetings</h1>
+        <ul className="tabs-container">
+          {languageGreetingsList.map(tabDetails => (
+            <Tabs
+              key={tabDetails.id}
+              tabDetails={tabDetails}
+              clickTabItem={this.clickTabItem}
+              isActive={activeTabId === tabDetails.id}
+            />
+          ))}
+        </ul>
+
+        {filteredProjects.map(eachItem => (
+          <LanguageItem key={eachItem.id} languageDetails={eachItem} />
         ))}
-      </ul>
-      <img src={imageUrl} alt={imageAltText} className="ima" />
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 export default App
