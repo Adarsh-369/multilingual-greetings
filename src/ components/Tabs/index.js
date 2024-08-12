@@ -11,9 +11,9 @@ const Tabs = props => {
   const activeTabBtnClassName = isActive ? 'active-tab-btn' : ''
 
   return (
-    <li className='tab-item-container'>
+    <li className="tab-item-container">
       <button
-        type='button'
+        type="button"
         className={`tab-btn ${activeTabBtnClassName}`}
         onClick={onClickTabItem}
       >
