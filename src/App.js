@@ -52,9 +52,9 @@ class App extends Component {
     const filteredProjects = this.getFilteredProjects()
 
     return (
-      <div className="main-container">
-        <h1 className="heading">Multilingual Greetings</h1>
-        <ul className="tabs-container">
+      <div className='main-container'>
+        <h1 className='heading'>Multilingual Greetings</h1>
+        <ul className='tabs-container'>
           {languageGreetingsList.map(tabDetails => (
             <Tabs
               key={tabDetails.id}
